@@ -1,5 +1,4 @@
-import Dependencies.{catsLaws, _}
-import sbt.Project
+import Dependencies._
 
 val projectName = "lptemplatedivision-lptemplateservicename"
 

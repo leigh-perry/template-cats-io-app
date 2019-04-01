@@ -9,7 +9,7 @@ object Dependencies {
     val catsEffect = "1.2.0"
 
     val logback = "1.2.3"
-    val log4cats = "0.2.0"
+    val log4cats = "0.3.0"
     
     val minitest = "2.3.2"
     val scalacheck = "1.14.0"
