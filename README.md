@@ -1,2 +1,2 @@
-# kafka-lptemplatedivision-lptemplateprojectname
+# lptemplatedivision-lptemplateprojectname
 
