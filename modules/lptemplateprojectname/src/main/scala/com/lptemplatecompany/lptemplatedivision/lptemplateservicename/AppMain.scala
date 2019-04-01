@@ -29,7 +29,7 @@ object AppMain
     for {
       log <- getLogger
       cfg <- Config.load
-      info <- Info.of[IO, Config](cfg, log)
+      info <- Info[IO, Config](cfg, log)
       _ <- info.logEnvironment
       _ <- log(cfg.toString)
       outcome <- runApp

@@ -37,6 +37,7 @@ lazy val shared =
         catsEffect,
         logback,
         log4catsSlf4j,
+        conduction,
         minitest % "test",
         minitestLaws % "test",
         scalacheck % "test",

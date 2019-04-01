@@ -69,8 +69,7 @@ class Info[F[_] : Monad, C](cfg: C, log: String => F[Unit])
 }
 
 object Info {
-  // TODO apply
-  def of[F[_] : Monad, C](cfg: C, log: String => F[Unit]): F[Info[F, C]] =
+  def apply[F[_] : Monad, C](cfg: C, log: String => F[Unit]): F[Info[F, C]] =
     new Info(cfg, log)
       .pure[F]
 }

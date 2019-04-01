@@ -6,7 +6,7 @@ import cats.effect.{IO, Resource}
 import cats.syntax.contravariantSemigroupal._
 import cats.syntax.either._
 import cats.syntax.functor._
-import com.lptemplatecompany.lptemplatedivision.shared.config.{Configured, Conversion, Environment}
+import com.leighperry.conduction.config.{Configured, Conversion, Environment}
 
 
 /**

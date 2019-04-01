@@ -10,6 +10,7 @@ object Dependencies {
 
     val logback = "1.2.3"
     val log4cats = "0.3.0"
+    val conduction = "0.1.0"
     
     val minitest = "2.3.2"
     val scalacheck = "1.14.0"
@@ -20,6 +21,7 @@ object Dependencies {
 
   val logback = "ch.qos.logback" % "logback-classic" % Version.logback
   val log4catsSlf4j = "io.chrisdavenport" %% "log4cats-slf4j" % Version.log4cats
+  val conduction = "com.github.leigh-perry" %% "conduction" % Version.conduction
 
   val minitest = "io.monix" %% "minitest" % Version.minitest
   val minitestLaws = "io.monix" %% "minitest-laws" % Version.minitest

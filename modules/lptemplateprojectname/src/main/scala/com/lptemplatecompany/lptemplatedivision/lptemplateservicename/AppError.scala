@@ -3,7 +3,7 @@ package com.lptemplatecompany.lptemplatedivision.lptemplateservicename
 import cats.Show
 import cats.data.NonEmptyChain
 import com.lptemplatecompany.lptemplatedivision.shared.Apps
-import com.lptemplatecompany.lptemplatedivision.shared.config.ConfiguredError
+import com.leighperry.conduction.config.ConfiguredError
 
 sealed trait AppError extends Throwable {
   override def toString: String =
