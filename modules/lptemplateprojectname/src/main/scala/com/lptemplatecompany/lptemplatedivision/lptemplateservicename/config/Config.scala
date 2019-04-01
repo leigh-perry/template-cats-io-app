@@ -26,7 +26,7 @@ object Config {
     for {
       env <- Environment.fromEnvVars[IO]
       logenv <- Environment.logging[IO](env, Environment.printer)
-      cio <- Configured[IO, Config]("SOMEAPP").run(logenv)
+      cio <- Configured[IO, Config]("LPTEMPLATESERVICENAME").run(logenv)
       result <- IO.fromEither(cio.toEither.leftMap(AppError.InvalidConfiguration))
     } yield result
 
