@@ -1,0 +1,30 @@
+import sbt._
+
+object Dependencies {
+
+  object Version {
+    val scala = "2.12.8"
+
+    val cats = "1.6.0"
+    val catsEffect = "1.2.0"
+
+    val logback = "1.2.3"
+    val log4cats = "0.2.0"
+    
+    val minitest = "2.3.2"
+    val scalacheck = "1.14.0"
+  }
+
+  val cats = "org.typelevel" %% "cats-core" % Version.cats
+  val catsEffect = "org.typelevel" %% "cats-effect" % Version.catsEffect
+
+  val logback = "ch.qos.logback" % "logback-classic" % Version.logback
+  val log4catsSlf4j = "io.chrisdavenport" %% "log4cats-slf4j" % Version.log4cats
+
+  val minitest = "io.monix" %% "minitest" % Version.minitest
+  val minitestLaws = "io.monix" %% "minitest-laws" % Version.minitest
+  val scalacheck = "org.scalacheck" %% "scalacheck" % Version.scalacheck
+  val catsLaws = "org.typelevel" %% "cats-laws" % Version.cats
+
+  val scalaReflect = "org.scala-lang" % "scala-reflect" % Version.scala
+}
