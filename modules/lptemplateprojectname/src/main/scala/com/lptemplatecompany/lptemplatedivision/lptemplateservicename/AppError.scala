@@ -21,14 +21,12 @@ object AppError {
     ExceptionEncountered(s"Exception $message: ${Apps.stackTrace(e)}")
 
   implicit val showAppError: Show[AppError] =
-    new Show[AppError] {
-      override def show(t: AppError): String = {
-        val extra: String =
-          t match {
-            case InvalidConfiguration(errors) => errors.toString
-            case ExceptionEncountered(message) => message.toString
-          }
-        s"${Apps.className(t)}: $extra"
-      }
+    (t: AppError) => {
+      val extra: String =
+        t match {
+          case InvalidConfiguration(errors) => errors.toString
+          case ExceptionEncountered(message) => message.toString
+        }
+      s"${Apps.className(t)}: $extra"
     }
 }

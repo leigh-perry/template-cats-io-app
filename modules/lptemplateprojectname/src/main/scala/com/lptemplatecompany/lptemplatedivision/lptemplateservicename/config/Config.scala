@@ -1,8 +1,11 @@
 package com.lptemplatecompany.lptemplatedivision.lptemplateservicename
+package config
 
 import cats.Monad
 import cats.effect.{IO, Resource}
-import cats.implicits._
+import cats.syntax.contravariantSemigroupal._
+import cats.syntax.either._
+import cats.syntax.functor._
 import com.lptemplatecompany.lptemplatedivision.shared.config.{Configured, Conversion, Environment}
 
 

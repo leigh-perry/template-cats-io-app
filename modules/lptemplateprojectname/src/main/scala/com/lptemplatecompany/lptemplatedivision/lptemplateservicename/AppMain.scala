@@ -1,7 +1,8 @@
 package com.lptemplatecompany.lptemplatedivision.lptemplateservicename
 
 import cats.effect.{ExitCode, IO, IOApp}
-import cats.implicits._
+import cats.syntax.apply._
+import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.config.{Config, Context}
 import com.lptemplatecompany.lptemplatedivision.shared.interpreter.Info
 
 /**
@@ -34,19 +35,13 @@ object AppMain
       outcome <- runApp
     } yield outcome
 
-  //    Context.create
-  //      .use {
-  //        ctx =>
-  //          for {
-  //            _ <- ctx.info.logEnvironment
-  //            _ <- ctx.log(ctx.cfg.toString)
-  //            outcome <- runApp
-  //          } yield outcome
-  //      }
-
   import scala.concurrent.duration._
 
   private def runApp: IO[Unit] =
-    IO.sleep(1.seconds)
-}
+    Context.create
+      .use {
+        _ =>
+          IO.sleep(1.seconds)
+      }
 
+}
