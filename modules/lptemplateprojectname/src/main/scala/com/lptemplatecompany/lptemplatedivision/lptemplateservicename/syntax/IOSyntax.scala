@@ -8,8 +8,7 @@ final class IOSyntaxSafeOps[A](a: => A) {
   def failWith(message: String): IO[A] =
     IO.delay(a)
       .attempt
-      .map(_.leftMap(e => AppError.exception(message, e)))
-      .flatMap(IO.fromEither(_))
+      .flatMap(e => IO.fromEither(e.leftMap(t => AppError.exception(message, t))))
 }
 
 trait ToIOSyntaxSafeOps {
