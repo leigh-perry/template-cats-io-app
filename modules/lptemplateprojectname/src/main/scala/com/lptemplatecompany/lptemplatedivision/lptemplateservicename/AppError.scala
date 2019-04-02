@@ -9,7 +9,7 @@ import com.lptemplatecompany.lptemplatedivision.shared.Apps
 
 sealed trait AppError extends Throwable {
   override def toString: String =
-    Show[AppError].show(this)
+    this.show
 }
 
 /**
@@ -24,13 +24,15 @@ object AppError {
     ExceptionEncountered(s"Exception $message: ${Apps.stackTrace(e)}")
 
   implicit val showAppError: Show[AppError] =
-    (t: AppError) => {
-      val extra: String =
-        t match {
-          case InvalidConfiguration(errors) => errors.show
-          case ExceptionEncountered(message) => message.show
-          case DirectoryDeleteFailed(dir) => dir.show
-        }
-      s"${Apps.className(t)}: $extra"
+    Show.show {
+      (t: AppError) => {
+        val extra: String =
+          t match {
+            case InvalidConfiguration(errors) => errors.show
+            case ExceptionEncountered(message) => message.show
+            case DirectoryDeleteFailed(dir) => dir.show
+          }
+        s"${Apps.className(t)}: $extra"
+      }
     }
 }
