@@ -4,6 +4,7 @@ package config
 import cats.effect.{IO, Resource}
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.algebra.ServiceAlg
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.interpreter.Service
+import io.chrisdavenport.log4cats.Logger
 
 /**
   * Top level application resources held in a Resource[...] so that proper cleanup happens
@@ -14,7 +15,7 @@ final case class Context[F[_]] private(
 )
 
 object Context {
-  def create(cfg: Config, log: String => IO[Unit]): Resource[IO, Context[IO]] =
+  def create(cfg: Config, log: Logger[IO]): Resource[IO, Context[IO]] =
     for {
       service <- Service.resource(cfg, log)
     } yield new Context[IO](service)

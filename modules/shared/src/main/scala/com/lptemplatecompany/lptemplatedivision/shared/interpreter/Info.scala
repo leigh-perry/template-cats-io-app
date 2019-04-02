@@ -10,6 +10,7 @@ import cats.syntax.functor._
 import cats.syntax.traverse._
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.BuildInfo
 import com.lptemplatecompany.lptemplatedivision.shared.algebra.InfoAlg
+import io.chrisdavenport.log4cats.Logger
 
 /**
   * The real-infrastructure implementation for logging of application information, typically at
@@ -17,7 +18,7 @@ import com.lptemplatecompany.lptemplatedivision.shared.algebra.InfoAlg
   *
   * C = config class
   */
-class Info[F[_] : Monad, C](cfg: C, log: String => F[Unit])
+class Info[F[_] : Monad, C](cfg: C, log: Logger[F])
   extends InfoAlg[F] {
 
   import scala.collection.JavaConverters._
@@ -29,22 +30,22 @@ class Info[F[_] : Monad, C](cfg: C, log: String => F[Unit])
     System.getenv.asScala.toMap.pure[F]
 
   override def logBanner: F[Unit] =
-    log(banner)
+    log.info(banner)
 
   override def logMap(m: Map[String, String]): F[Unit] =
     m.toList
       .sortBy(_._1)
-      .traverse(e => log(formatMapEntry(e)))
+      .traverse(e => log.info(formatMapEntry(e)))
       .void
 
   override def logConfig: F[Unit] =
-    log(s"Configuration $cfg")
+    log.info(s"Configuration $cfg")
 
   override def logSeparator: F[Unit] =
-    log(separator)
+    log.info(separator)
 
   override def logTitle(title: String): F[Unit] =
-    log(title)
+    log.info(title)
 
   private val banner =
     s"""${Apps.className(this)} process version: ${BuildInfo.version}
@@ -69,7 +70,7 @@ class Info[F[_] : Monad, C](cfg: C, log: String => F[Unit])
 }
 
 object Info {
-  def of[F[_] : Monad, C](cfg: C, log: String => F[Unit]): F[Info[F, C]] =
+  def of[F[_] : Monad, C](cfg: C, log: Logger[F]): F[Info[F, C]] =
     new Info(cfg, log)
       .pure[F]
 }

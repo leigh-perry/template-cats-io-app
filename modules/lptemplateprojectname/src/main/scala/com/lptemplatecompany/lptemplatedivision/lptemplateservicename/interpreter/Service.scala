@@ -3,11 +3,12 @@ package com.lptemplatecompany.lptemplatedivision.lptemplateservicename.interpret
 import cats.effect.{IO, Resource, Timer}
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.algebra.ServiceAlg
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.config.Config
+import io.chrisdavenport.log4cats.Logger
 
 /**
   * The real-infrastructure implementation for the top level service
   */
-class Service private(cfg: Config, log: String => IO[Unit])
+class Service private(cfg: Config, log: Logger[IO])
   extends ServiceAlg[IO] {
 
   implicit val timer: Timer[IO] = IO.timer(scala.concurrent.ExecutionContext.global)
@@ -20,7 +21,7 @@ class Service private(cfg: Config, log: String => IO[Unit])
 }
 
 object Service {
-  def resource(cfg: Config, log: String => IO[Unit]): Resource[IO, ServiceAlg[IO]] =
+  def resource(cfg: Config, log: Logger[IO]): Resource[IO, ServiceAlg[IO]] =
     Resource.liftF(IO(new Service(cfg, log): ServiceAlg[IO]))
 }
 
