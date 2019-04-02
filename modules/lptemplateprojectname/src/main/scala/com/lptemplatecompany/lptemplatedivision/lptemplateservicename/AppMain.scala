@@ -29,19 +29,19 @@ object AppMain
     for {
       log <- getLogger
       cfg <- Config.load
-      info <- Info[IO, Config](cfg, log)
+      info <- Info.of[IO, Config](cfg, log)
       _ <- info.logEnvironment
       _ <- log(cfg.toString)
-      outcome <- runApp
+      outcome <- runApp(cfg, log)
     } yield outcome
 
   import scala.concurrent.duration._
 
-  private def runApp: IO[Unit] =
-    Context.create
+  private def runApp(cfg: Config, log: String => IO[Unit]): IO[Unit] =
+    Context.create(cfg, log)
       .use {
-        _ =>
-          IO.sleep(1.seconds)
+        ctx =>
+          ctx.service.run
       }
 
 }

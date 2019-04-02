@@ -9,7 +9,7 @@ import cats.syntax.flatMap._
   * Tagless final abstraction for logging of application information, typically at
   * application startup
   *
-  * @tparam F the target monad
+  * @tparam F the target effect
   */
 trait InfoAlg[F[_]] {
   def systemProperties: F[Map[String, String]]
