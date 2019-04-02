@@ -2,8 +2,10 @@ package com.lptemplatecompany.lptemplatedivision.lptemplateservicename
 
 import cats.Show
 import cats.data.NonEmptyChain
-import com.lptemplatecompany.lptemplatedivision.shared.Apps
+import cats.instances.string._
+import cats.syntax.show._
 import com.leighperry.conduction.config.ConfiguredError
+import com.lptemplatecompany.lptemplatedivision.shared.Apps
 
 sealed trait AppError extends Throwable {
   override def toString: String =
@@ -16,6 +18,7 @@ sealed trait AppError extends Throwable {
 object AppError {
   final case class InvalidConfiguration(errors: NonEmptyChain[ConfiguredError]) extends AppError
   final case class ExceptionEncountered(message: String) extends AppError
+  final case class DirectoryDeleteFailed(dir: String) extends AppError
 
   def exception(message: String, e: Throwable): AppError =
     ExceptionEncountered(s"Exception $message: ${Apps.stackTrace(e)}")
@@ -24,8 +27,9 @@ object AppError {
     (t: AppError) => {
       val extra: String =
         t match {
-          case InvalidConfiguration(errors) => errors.toString
-          case ExceptionEncountered(message) => message.toString
+          case InvalidConfiguration(errors) => errors.show
+          case ExceptionEncountered(message) => message.show
+          case DirectoryDeleteFailed(dir) => dir.show
         }
       s"${Apps.className(t)}: $extra"
     }
