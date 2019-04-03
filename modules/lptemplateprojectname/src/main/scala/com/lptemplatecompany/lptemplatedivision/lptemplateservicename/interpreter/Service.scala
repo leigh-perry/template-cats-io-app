@@ -59,16 +59,16 @@ object FileSystem
 
   def tempFilename(extension: Option[String]): IO[String] =
     UUID.randomUUID.toString
-      .failWith("UUID.randomUUID failed")
+      .failWithMsg("UUID.randomUUID failed")
       .map(name => extension.fold(name)(ext => s"$name.$ext"))
 
   def baseTempDir: IO[String] =
     System.getProperty("java.io.tmpdir")
-      .failWith("Could not get tmpdir")
+      .failWithMsg("Could not get tmpdir")
 
   def deleteFileOrDirectory(filepath: String): IO[Unit] =
     delete(new File(filepath))
-      .failWith(s"Could not delete $filepath")
+      .failWithMsg(s"Could not delete $filepath")
       .ensure(AppError.DirectoryDeleteFailed(filepath))(identity)
       .void
 
@@ -76,8 +76,8 @@ object FileSystem
     for {
       base <- baseTempDir
       parent <- IO(Path.of(base))
-      tempPath <- Files.createTempDirectory(parent, "workspace").failWith("Could not create temp dir")
-      tempDir <- tempPath.toFile.getAbsolutePath.failWith(s"Could not resolve $tempPath")
+      tempPath <- Files.createTempDirectory(parent, "workspace").failWithMsg("Could not create temp dir")
+      tempDir <- tempPath.toFile.getAbsolutePath.failWithMsg(s"Could not resolve $tempPath")
     } yield tempDir
 
   //// internal impure code

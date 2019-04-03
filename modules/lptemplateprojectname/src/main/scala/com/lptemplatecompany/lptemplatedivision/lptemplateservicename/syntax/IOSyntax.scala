@@ -5,7 +5,12 @@ import cats.syntax.either._
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.AppError
 
 final class IOSyntaxSafeOps[A](a: => A) {
-  def failWith(message: String): IO[A] =
+  def failWith(err: AppError): IO[A] =
+    IO.delay(a)
+      .attempt
+      .flatMap(e => IO.fromEither(e.leftMap(t => err)))
+
+  def failWithMsg(message: String): IO[A] =
     IO.delay(a)
       .attempt
       .flatMap(e => IO.fromEither(e.leftMap(t => AppError.exception(message, t))))
