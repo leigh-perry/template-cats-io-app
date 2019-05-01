@@ -20,7 +20,7 @@ class Service private(cfg: Config, log: Logger[IO], tempDir: String)
 
   override def run: IO[Unit] =
     log.info(s"Starting in $tempDir") *>
-      IO.sleep(10.seconds) <*
+      IO.sleep(2.seconds) <*
       log.info(s"Finishing in $tempDir")
 
 }
