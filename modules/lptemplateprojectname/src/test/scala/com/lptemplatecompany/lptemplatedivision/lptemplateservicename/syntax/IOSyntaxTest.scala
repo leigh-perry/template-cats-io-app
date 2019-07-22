@@ -20,10 +20,9 @@ object IOSyntaxTest
           .attempt
           .unsafeRunSync()
           .shouldSatisfy {
-            case Left(AppError.ExceptionEncountered(s)) => {
+            case Left(AppError.ExceptionEncountered(s)) =>
               s.contains("RuntimeException") &&
                 s.contains(s"message $v")
-            }
             case _ =>
               false
           }

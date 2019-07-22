@@ -8,7 +8,7 @@ final class IOSyntaxSafeOps[A](a: => A) {
   def failWith(err: AppError): IO[A] =
     IO.delay(a)
       .attempt
-      .flatMap(e => IO.fromEither(e.leftMap(t => err)))
+      .flatMap(e => IO.fromEither(e.leftMap(_ => err)))
 
   def failWithMsg(message: String): IO[A] =
     IO.delay(a)
