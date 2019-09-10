@@ -6,13 +6,13 @@ object Dependencies {
     val scala = "2.12.9"
 
     val cats = "2.0.0"
-    val catsEffect = "1.4.0"
+    val catsEffect = "2.0.0"
 
     val logback = "1.2.3"
     val log4cats = "0.3.0"
     val conduction = "0.1.1"
     
-    val minitest = "2.6.0"
+    val minitest = "2.7.0"
     val scalacheck = "1.14.0"
   }
 
