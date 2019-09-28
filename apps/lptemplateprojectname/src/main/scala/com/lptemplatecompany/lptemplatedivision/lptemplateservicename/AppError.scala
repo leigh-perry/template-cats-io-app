@@ -13,8 +13,8 @@ sealed trait AppError extends Throwable {
 }
 
 /**
-  * The ADT of error types for the application. IO requires a Throwable subclass.
-  */
+ * The ADT of error types for the application. IO requires a Throwable subclass.
+ */
 object AppError {
   final case class InvalidConfiguration(errors: NonEmptyChain[ConfiguredError]) extends AppError
   final case class ExceptionEncountered(message: String) extends AppError
@@ -25,14 +25,15 @@ object AppError {
 
   implicit val showAppError: Show[AppError] =
     Show.show {
-      t: AppError => {
-        val extra: String =
-          t match {
-            case InvalidConfiguration(errors) => errors.show
-            case ExceptionEncountered(message) => message.show
-            case DirectoryDeleteFailed(dir) => dir.show
-          }
-        s"${Apps.className(t)}: $extra"
-      }
+      t: AppError =>
+        {
+          val extra: String =
+            t match {
+              case InvalidConfiguration(errors) => errors.show
+              case ExceptionEncountered(message) => message.show
+              case DirectoryDeleteFailed(dir) => dir.show
+            }
+          s"${Apps.className(t)}: $extra"
+        }
     }
 }

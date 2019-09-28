@@ -1,16 +1,16 @@
 package com.lptemplatecompany.lptemplatedivision.lptemplateservicename
 package config
 
-import cats.effect.{IO, Resource}
+import cats.effect.{ IO, Resource }
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.algebra.ServiceAlg
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.interpreter.Service
 import io.chrisdavenport.log4cats.Logger
 
 /**
-  * Top level application resources held in a Resource[...] so that proper cleanup happens
-  * on program termination, whether clean or failure.
-  */
-final case class Context[F[_]] private(
+ * Top level application resources held in a Resource[...] so that proper cleanup happens
+ * on program termination, whether clean or failure.
+ */
+final case class Context[F[_]] private (
   service: ServiceAlg[F]
 )
 

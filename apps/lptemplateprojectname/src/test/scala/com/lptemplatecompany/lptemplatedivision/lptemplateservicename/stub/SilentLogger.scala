@@ -6,7 +6,7 @@ import io.chrisdavenport.log4cats.Logger
 
 object SilentLogger {
 
-  def create[F[_] : Sync]: F[Logger[F]] =
+  def create[F[_]: Sync]: F[Logger[F]] =
     new Logger[F] {
       override def error(t: Throwable)(message: => String): F[Unit] =
         ().pure

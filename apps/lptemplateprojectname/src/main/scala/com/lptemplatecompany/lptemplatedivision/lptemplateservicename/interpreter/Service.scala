@@ -1,6 +1,6 @@
 package com.lptemplatecompany.lptemplatedivision.lptemplateservicename.interpreter
 
-import cats.effect.{IO, Resource, Timer}
+import cats.effect.{ IO, Resource, Timer }
 import cats.syntax.apply._
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.AppError
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.algebra.ServiceAlg
@@ -9,10 +9,9 @@ import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.syntax.IOS
 import io.chrisdavenport.log4cats.Logger
 
 /**
-  * The real-infrastructure implementation for the top level service
-  */
-class Service private(cfg: Config, log: Logger[IO], tempDir: String)
-  extends ServiceAlg[IO] {
+ * The real-infrastructure implementation for the top level service
+ */
+class Service private (cfg: Config, log: Logger[IO], tempDir: String) extends ServiceAlg[IO] {
 
   implicit val timer: Timer[IO] = IO.timer(scala.concurrent.ExecutionContext.global)
 
@@ -36,14 +35,13 @@ object Service {
 //// sample code only
 
 import java.io.File
-import java.nio.file.{Files, Path}
+import java.nio.file.{ Files, Path }
 import java.util.UUID
 
 import cats.syntax.functor._
 import cats.syntax.monadError._
 
-object FileSystem
-  extends IOSyntax {
+object FileSystem extends IOSyntax {
 
   def tempDirectoryScope(log: Logger[IO]): Resource[IO, String] =
     Resource.make {
@@ -58,12 +56,15 @@ object FileSystem
     }
 
   def tempFilename(extension: Option[String]): IO[String] =
-    UUID.randomUUID.toString
+    UUID
+      .randomUUID
+      .toString
       .failWithMsg("UUID.randomUUID failed")
       .map(name => extension.fold(name)(ext => s"$name.$ext"))
 
   def baseTempDir: IO[String] =
-    System.getProperty("java.io.tmpdir")
+    System
+      .getProperty("java.io.tmpdir")
       .failWithMsg("Could not get tmpdir")
 
   def deleteFileOrDirectory(filepath: String): IO[Unit] =
@@ -76,7 +77,9 @@ object FileSystem
     for {
       base <- baseTempDir
       parent <- IO(Path.of(base))
-      tempPath <- Files.createTempDirectory(parent, "workspace").failWithMsg("Could not create temp dir")
+      tempPath <- Files
+        .createTempDirectory(parent, "workspace")
+        .failWithMsg("Could not create temp dir")
       tempDir <- tempPath.toFile.getAbsolutePath.failWithMsg(s"Could not resolve $tempPath")
     } yield tempDir
 

@@ -11,7 +11,6 @@ object Dependencies {
     val log4cats = "1.0.0"
     val conduction = "0.3.6"
 
-    val minitest = "2.7.0"
     val scalacheck = "1.14.2"
   }
 
@@ -22,8 +21,6 @@ object Dependencies {
   val log4catsSlf4j = "io.chrisdavenport" %% "log4cats-slf4j" % Version.log4cats
   val conduction = "com.github.leigh-perry" %% "conduction-core" % Version.conduction
 
-  val minitest = "io.monix" %% "minitest" % Version.minitest
-  val minitestLaws = "io.monix" %% "minitest-laws" % Version.minitest
   val scalacheck = "org.scalacheck" %% "scalacheck" % Version.scalacheck
   val catsLaws = "org.typelevel" %% "cats-laws" % Version.cats
 }
