@@ -9,7 +9,7 @@ object Dependencies {
 
     val logback = "1.2.3"
     val log4cats = "1.0.0"
-    val conduction = "0.3.6"
+    val conduction = "0.4.1"
 
     val scalacheck = "1.14.2"
   }
