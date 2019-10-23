@@ -1,7 +1,7 @@
 package com.lptemplatecompany.lptemplatedivision
 package shared
 
-import java.io.{PrintWriter, StringWriter}
+import java.io.{ PrintWriter, StringWriter }
 
 object Apps {
   def className(o: AnyRef): String =

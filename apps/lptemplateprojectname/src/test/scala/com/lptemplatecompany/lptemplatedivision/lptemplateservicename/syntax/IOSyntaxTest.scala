@@ -7,16 +7,13 @@ import com.lptemplatecompany.lptemplatedivision.shared.testsupport.TestSupport
 import minitest.SimpleTestSuite
 import minitest.laws.Checkers
 
-object IOSyntaxTest
-  extends SimpleTestSuite
-    with IOSyntax
-    with Checkers
-    with TestSupport {
+object IOSyntaxTest extends SimpleTestSuite with IOSyntax with Checkers with TestSupport {
 
   test("exception catching as message") {
     check1 {
       v: String =>
-        ((throw new RuntimeException(v)): Int).failWithMsg(s"message $v")
+        ((throw new RuntimeException(v)): Int)
+          .failWithMsg(s"message $v")
           .attempt
           .unsafeRunSync()
           .shouldSatisfy {
@@ -32,7 +29,8 @@ object IOSyntaxTest
   test("exception catching as AppError") {
     check1 {
       v: String =>
-        ((throw new RuntimeException(v)): Int).failWith(DirectoryDeleteFailed(v))
+        ((throw new RuntimeException(v)): Int)
+          .failWith(DirectoryDeleteFailed(v))
           .attempt
           .unsafeRunSync()
           .shouldBe(DirectoryDeleteFailed(v).asLeft)

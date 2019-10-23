@@ -23,8 +23,6 @@ trait ToIOSyntaxSafeOps {
 
 ////
 
-trait IOSyntax
-  extends ToIOSyntaxSafeOps
+trait IOSyntax extends ToIOSyntaxSafeOps
 
-object aiosyntaxinstances
-  extends IOSyntax
+object aiosyntaxinstances extends IOSyntax
