@@ -6,6 +6,7 @@ import cats.effect.{ IO, Resource }
 import cats.syntax.contravariantSemigroupal._
 import cats.syntax.either._
 import cats.syntax.functor._
+import cats.syntax.flatMap._
 import com.leighperry.conduction.config.{ Configured, Conversion, Environment }
 
 /**
@@ -25,7 +26,7 @@ object Config {
   def load: IO[Config] =
     for {
       env <- Environment.fromEnvVars[IO]
-      logenv <- Environment.logging[IO](env, Environment.printer)
+      logenv = Environment.logging[IO](env, Environment.printer[IO])
       cio <- Configured[IO, Config]("LPTEMPLATESERVICENAME").run(logenv)
       result <- IO.fromEither(cio.toEither.leftMap(AppError.InvalidConfiguration))
     } yield result

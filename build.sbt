@@ -1,4 +1,4 @@
-import Dependencies._
+import Dependencies.{ minitest, _ }
 
 val Scala_213 = "2.13.1"
 val Scala_212 = "2.12.10"
@@ -51,7 +51,11 @@ lazy val commonSettings =
     scalaVersion := Scala_213,
     scalacOptions ++= commonScalacOptions(scalaVersion.value),
     fork in Test := true,
-    testFrameworks += new TestFramework("org.scalacheck.ScalaCheckFramework"),
+    testFrameworks +=
+      new TestFramework(
+        "org.scalacheck.ScalaCheckFramework",
+        "minitest.runner.Framework"
+      ),
     name := projectName,
     updateOptions := updateOptions.value.withGigahorse(false),
     libraryDependencies ++=
@@ -74,7 +78,9 @@ lazy val shared =
           catsEffect,
           logback,
           log4catsSlf4j,
-          conduction
+          conduction,
+          minitest % "test",
+          minitestLaws % "test"
         )
     )
     .enablePlugins(BuildInfoPlugin)
