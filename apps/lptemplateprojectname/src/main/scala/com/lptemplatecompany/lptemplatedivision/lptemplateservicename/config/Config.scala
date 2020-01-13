@@ -20,7 +20,7 @@ object Config {
 
   implicit def configured[F[_]](implicit F: Monad[F]): Configured[F, Config] =
     Configured[F, KafkaConfig]
-      .withSuffix("KAFKA")
+      .withSuffix("LPTEMPLATEENVPREFIX_KAFKA")
       .map(Config.apply)
 
   def load: IO[Config] =
