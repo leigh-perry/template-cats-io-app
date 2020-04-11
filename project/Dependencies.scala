@@ -6,6 +6,7 @@ object Dependencies {
 
     val cats = "2.1.1"
     val catsEffect = "2.1.2"
+    val catsMouse = "0.24"
 
     val logback = "1.2.3"
     val log4cats = "1.0.1"
@@ -17,6 +18,7 @@ object Dependencies {
 
   val cats = "org.typelevel" %% "cats-core" % Version.cats
   val catsEffect = "org.typelevel" %% "cats-effect" % Version.catsEffect
+  val catsMouse = "org.typelevel" %% "mouse" % Version.catsMouse
 
   val logback = "ch.qos.logback" % "logback-classic" % Version.logback
   val log4catsSlf4j = "io.chrisdavenport" %% "log4cats-slf4j" % Version.log4cats
