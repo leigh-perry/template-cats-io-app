@@ -80,6 +80,7 @@ lazy val shared =
           logback,
           log4catsSlf4j,
           conduction,
+          conductionMagnolia,
           minitest % "test",
           minitestLaws % "test"
         )

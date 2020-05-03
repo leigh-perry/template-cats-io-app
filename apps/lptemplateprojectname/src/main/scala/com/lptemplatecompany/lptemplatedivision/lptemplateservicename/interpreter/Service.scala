@@ -4,14 +4,14 @@ import cats.effect.{ IO, Resource, Timer }
 import cats.syntax.apply._
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.AppError
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.algebra.ServiceAlg
-import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.config.Config
+import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.config.AppConfig
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.syntax.IOSyntax
 import io.chrisdavenport.log4cats.Logger
 
 /**
  * The real-infrastructure implementation for the top level service
  */
-class Service private (cfg: Config, log: Logger[IO], tempDir: String) extends ServiceAlg[IO] {
+class Service private (cfg: AppConfig, log: Logger[IO], tempDir: String) extends ServiceAlg[IO] {
 
   implicit val timer: Timer[IO] = IO.timer(scala.concurrent.ExecutionContext.global)
 
@@ -25,7 +25,7 @@ class Service private (cfg: Config, log: Logger[IO], tempDir: String) extends Se
 }
 
 object Service {
-  def resource(cfg: Config, log: Logger[IO]): Resource[IO, ServiceAlg[IO]] =
+  def resource(cfg: AppConfig, log: Logger[IO]): Resource[IO, ServiceAlg[IO]] =
     for {
       tempDir <- FileSystem.tempDirectoryScope(log)
       svc <- Resource.liftF(IO(new Service(cfg, log, tempDir): ServiceAlg[IO]))

@@ -23,6 +23,7 @@ object Dependencies {
   val logback = "ch.qos.logback" % "logback-classic" % Version.logback
   val log4catsSlf4j = "io.chrisdavenport" %% "log4cats-slf4j" % Version.log4cats
   val conduction = "com.github.leigh-perry" %% "conduction-core" % Version.conduction
+  val conductionMagnolia = "com.github.leigh-perry" %% "conduction-magnolia" % Version.conduction
 
   val minitest = "io.monix" %% "minitest" % Version.minitest
   val minitestLaws = "io.monix" %% "minitest-laws" % Version.minitest

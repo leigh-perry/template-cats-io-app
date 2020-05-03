@@ -20,8 +20,8 @@ import io.chrisdavenport.log4cats.Logger
  */
 class Info[F[_]: Monad, C](cfg: C, log: Logger[F]) extends InfoAlg[F] {
 
-  //import scala.collection.JavaConverters._    // <= 2.12
-  import scala.jdk.CollectionConverters._
+  import scala.collection.JavaConverters._    // <= 2.12
+//  import scala.jdk.CollectionConverters._
 
   override def systemProperties: F[Map[String, String]] =
     System.getProperties.asScala.toMap.pure[F]

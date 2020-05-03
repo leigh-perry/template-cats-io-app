@@ -15,7 +15,7 @@ final case class Context[F[_]] private (
 )
 
 object Context {
-  def create(cfg: Config, log: Logger[IO]): Resource[IO, Context[IO]] =
+  def create(cfg: AppConfig, log: Logger[IO]): Resource[IO, Context[IO]] =
     for {
       service <- Service.resource(cfg, log)
     } yield new Context[IO](service)

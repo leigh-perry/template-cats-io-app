@@ -8,35 +8,33 @@ import cats.syntax.either._
 import cats.syntax.functor._
 import com.leighperry.conduction.config.{ Configured, Conversion, Environment }
 import io.chrisdavenport.log4cats.Logger
+import com.leighperry.conduction.config.magnolia.AutoConfigInstancesIO._
+
 
 /**
  * Overall application configuration
  */
-final case class Config(
+final case class AppConfig(
   kafka: KafkaConfig
 )
 
-object Config {
+// Magnolia-generated config
+object AppConfig {
 
-  implicit def configured[F[_]](implicit F: Monad[F]): Configured[F, Config] =
-    Configured[F, KafkaConfig]
-      .withSuffix("LPTEMPLATEENVPREFIX_KAFKA")
-      .map(Config.apply)
-
-  private val baseName = "LPTEMPLATESERVICENAME"
+  private val baseName = "LPTEMPLATESERVICENAME_LPTEMPLATEENVPREFIX"
   private val sep = "\n    "
 
-  def load(log: Logger[IO]): IO[Config] =
+  def load(log: Logger[IO]): IO[AppConfig] =
     for {
-      _ <- log.info(s"All config parameters:${sep}${Configured[IO, Config].description(baseName).prettyPrint(sep)}")
+      _ <- log.info(s"All config parameters:${sep}${Configured[IO, AppConfig].description(baseName).prettyPrint(sep)}")
       env <- Environment.fromEnvVars[IO]
       logenv = Environment.logging[IO](env, Environment.printer[IO])
-      cio <- Configured[IO, Config](baseName).run(logenv)
+      cio <- Configured[IO, AppConfig](baseName).run(logenv)
       result <- IO.fromEither(cio.toEither.leftMap(AppError.InvalidConfiguration))
     } yield result
 
-  val defaults: Config =
-    Config(
+  val defaults: AppConfig =
+    AppConfig(
       kafka = KafkaConfig(
         bootstrapServers = KafkaBootstrapServers("localhost:9092"),
         schemaRegistryUrl = KafkaSchemaRegistryUrl("http://localhost:8081"),
@@ -54,16 +52,7 @@ case class KafkaConfig(
   verbose: Option[Boolean]
 )
 
-object KafkaConfig {
-  implicit def configured[F[_]](implicit F: Monad[F]): Configured[F, KafkaConfig] =
-    (
-      Configured[F, KafkaBootstrapServers].withSuffix("BOOTSTRAP_SERVERS"),
-      Configured[F, KafkaSchemaRegistryUrl].withSuffix("SCHEMA_REGISTRY_URL"),
-      Configured[F, List[PropertyValue]].withSuffix("PROPERTY"),
-      Configured[F, Option[Boolean]].withSuffix("VERBOSE")
-    ).mapN(KafkaConfig.apply)
-}
-
+// Explicit config for newtypes
 final case class KafkaBootstrapServers(value: String) extends AnyVal
 object KafkaBootstrapServers {
   implicit def conversion: Conversion[KafkaBootstrapServers] =
@@ -77,11 +66,3 @@ object KafkaSchemaRegistryUrl {
 }
 
 case class PropertyValue(name: String, value: String)
-
-object PropertyValue {
-  implicit def configured[F[_]](implicit F: Monad[F]): Configured[F, PropertyValue] =
-    (
-      Configured[F, String].withSuffix("NAME"),
-      Configured[F, String].withSuffix("VALUE")
-    ).mapN(PropertyValue.apply)
-}
