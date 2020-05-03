@@ -2,12 +2,12 @@ package com.lptemplatecompany.lptemplatedivision.lptemplateservicename
 package config
 
 import cats.Monad
-import cats.effect.{ IO, Resource }
+import cats.effect.IO
 import cats.syntax.contravariantSemigroupal._
 import cats.syntax.either._
 import cats.syntax.functor._
-import cats.syntax.flatMap._
 import com.leighperry.conduction.config.{ Configured, Conversion, Environment }
+import io.chrisdavenport.log4cats.Logger
 
 /**
  * Overall application configuration
@@ -23,16 +23,17 @@ object Config {
       .withSuffix("LPTEMPLATEENVPREFIX_KAFKA")
       .map(Config.apply)
 
-  def load: IO[Config] =
+  private val baseName = "LPTEMPLATESERVICENAME"
+  private val sep = "\n    "
+
+  def load(log: Logger[IO]): IO[Config] =
     for {
+      _ <- log.info(s"All config parameters:${sep}${Configured[IO, Config].description(baseName).prettyPrint(sep)}")
       env <- Environment.fromEnvVars[IO]
       logenv = Environment.logging[IO](env, Environment.printer[IO])
-      cio <- Configured[IO, Config]("LPTEMPLATESERVICENAME").run(logenv)
+      cio <- Configured[IO, Config](baseName).run(logenv)
       result <- IO.fromEither(cio.toEither.leftMap(AppError.InvalidConfiguration))
     } yield result
-
-  def resource: Resource[IO, Config] =
-    Resource.liftF(load)
 
   val defaults: Config =
     Config(
