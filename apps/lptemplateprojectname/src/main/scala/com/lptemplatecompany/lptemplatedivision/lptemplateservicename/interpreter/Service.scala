@@ -1,16 +1,18 @@
 package com.lptemplatecompany.lptemplatedivision.lptemplateservicename.interpreter
 
 import cats.effect.{ IO, Resource, Timer }
-import cats.syntax.apply._
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.AppError
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.algebra.ServiceAlg
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.config.AppConfig
 import com.lptemplatecompany.lptemplatedivision.lptemplateservicename.syntax.IOSyntax
 import io.chrisdavenport.log4cats.Logger
 
+import scala.annotation.nowarn
+
 /**
  * The real-infrastructure implementation for the top level service
  */
+@nowarn("cat=unused-params")
 class Service private (cfg: AppConfig, log: Logger[IO], tempDir: String) extends ServiceAlg[IO] {
 
   implicit val timer: Timer[IO] = IO.timer(scala.concurrent.ExecutionContext.global)
@@ -38,7 +40,6 @@ import java.io.File
 import java.nio.file.{ Files, Path }
 import java.util.UUID
 
-import cats.syntax.functor._
 import cats.syntax.monadError._
 
 object FileSystem extends IOSyntax {
@@ -77,9 +78,10 @@ object FileSystem extends IOSyntax {
     for {
       base <- baseTempDir
       parent <- IO(Path.of(base))
-      tempPath <- Files
-        .createTempDirectory(parent, "workspace")
-        .failWithMsg("Could not create temp dir")
+      tempPath <-
+        Files
+          .createTempDirectory(parent, "workspace")
+          .failWithMsg("Could not create temp dir")
       tempDir <- tempPath.toFile.getAbsolutePath.failWithMsg(s"Could not resolve $tempPath")
     } yield tempDir
 
@@ -89,9 +91,8 @@ object FileSystem extends IOSyntax {
     if (file.isDirectory) {
       // Delete the contents of the directory first
       val children = file.list
-      for (element <- children) {
+      for (element <- children)
         delete(new File(file, element))
-      }
     }
     file.delete
   }
