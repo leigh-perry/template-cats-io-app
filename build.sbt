@@ -1,7 +1,7 @@
 import Dependencies.{ minitest, _ }
 
 val Scala_213 = "2.13.3"
-val Scala_212 = "2.12.10"
+//val Scala_212 = "2.12.10"
 //val Scala_211 = "2.11.12"
 
 ////
@@ -81,7 +81,7 @@ lazy val commonSettings =
   )
 
 lazy val crossBuiltCommonSettings = commonSettings ++ Seq(
-  crossScalaVersions := Seq(Scala_212, Scala_213)
+  crossScalaVersions := Seq(/*Scala_212,*/ Scala_213)
 )
 
 lazy val shared =
