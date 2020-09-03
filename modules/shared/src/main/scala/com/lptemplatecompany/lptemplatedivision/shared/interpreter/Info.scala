@@ -2,9 +2,6 @@ package com.lptemplatecompany.lptemplatedivision.shared
 package interpreter
 
 import cats.Monad
-import cats.instances.list._
-import cats.instances.order._
-import cats.instances.string._
 import cats.syntax.applicative._
 import cats.syntax.functor._
 import cats.syntax.traverse._
