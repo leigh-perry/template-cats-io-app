@@ -2,7 +2,6 @@ package com.lptemplatecompany.lptemplatedivision.lptemplateservicename
 
 import cats.Show
 import cats.data.NonEmptyChain
-import cats.instances.string._
 import cats.syntax.show._
 import com.leighperry.conduction.config.ConfiguredError
 import com.lptemplatecompany.lptemplatedivision.shared.Apps
