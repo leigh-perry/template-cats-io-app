@@ -4,15 +4,15 @@ object Dependencies {
   object Version {
     val kindProjectorVersion = "0.10.3"
 
-    val cats = "2.5.0"
-    val catsEffect = "2.5.0"
-    val catsMouse = "1.0.0"
+    val cats = "2.4.2"
+    val catsEffect = "2.4.2"
+    val catsMouse = "1.0.2"
 
     val logback = "1.2.3"
-    val log4cats = "1.2.1"
+    val log4cats = "1.2.2"
     val conduction = "0.6.2"
 
-    val minitest = "2.9.3"
+    val minitest = "2.9.4"
     val scalacheck = "1.15.3"
   }
 
