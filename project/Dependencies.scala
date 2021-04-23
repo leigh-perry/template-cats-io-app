@@ -9,7 +9,7 @@ object Dependencies {
     val catsMouse = "1.0.2"
 
     val logback = "1.2.3"
-    val log4cats = "2.0.1"
+    val log4cats = "2.1.0"
     val conduction = "0.6.2"
 
     val minitest = "2.9.5"
