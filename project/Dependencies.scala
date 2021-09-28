@@ -5,8 +5,8 @@ object Dependencies {
     val kindProjectorVersion = "0.10.3"
 
     val cats = "2.6.1"
-    val catsEffect = "3.2.9"
-    val catsMouse = "1.0.4"
+    val catsEffect = "3.1.1"
+    val catsMouse = "1.0.5"
 
     val logback = "1.2.6"
     val log4cats = "2.1.1"
