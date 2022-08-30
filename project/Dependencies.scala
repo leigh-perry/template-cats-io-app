@@ -8,7 +8,7 @@ object Dependencies {
     val catsEffect = "3.1.1"
     val catsMouse = "1.0.11"
 
-    val logback = "1.2.11"
+    val logback = "1.4.0"
     val log4cats = "2.1.1"
     val conduction = "0.6.2"
 
